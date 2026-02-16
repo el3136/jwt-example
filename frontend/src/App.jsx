@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import AuthProvider from "./context/AuthProvider";
 import { AuthContext } from "./context/AuthContext";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
 
 function ProtectedRoute({ children }) {
   const { user } = useContext(AuthContext);
@@ -22,10 +23,21 @@ function AppRoutes() {
     <>
       <h1>JWT Demo</h1>
 
+      <nav style={{ marginBottom: 20 }}>
+        {!user && <Link to="/login">Login</Link>}{" "}
+        {!user && <Link to="/signup">Signup</Link>}{" "}
+        {user && <Link to="/profile">Profile</Link>}
+      </nav>
+
       <Routes>
         <Route
           path="/login"
           element={user ? <Navigate to="/profile" /> : <Login />}
+        />
+
+        <Route
+          path="/signup"
+          element={user ? <Navigate to="/profile" /> : <Signup />}
         />
 
         <Route
@@ -37,7 +49,6 @@ function AppRoutes() {
           }
         />
 
-        {/* Default */}
         <Route path="*" element={<Navigate to="/profile" />} />
       </Routes>
     </>

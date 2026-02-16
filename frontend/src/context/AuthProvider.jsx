@@ -6,7 +6,7 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   const login = async (username, password) => {
-    const res = await fetch("http://localhost:5000/auth/login", {
+    const res = await fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password })
@@ -23,7 +23,7 @@ export default function AuthProvider({ children }) {
   const logout = async () => {
     const token = localStorage.getItem("refreshToken");
 
-    await fetch("http://localhost:5000/auth/logout", {
+    await fetch("http://localhost:3000/auth/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token })
